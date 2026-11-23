@@ -135,7 +135,7 @@ export default async function StorefrontLayout({
             />
           )}
           <Navbar menu={menu} categories={categories} pages={footerMenu} settings={settings} />
-                    <main className="flex-1 bg-neutral-50">
+                    <main className="flex-1 bg-white">
             {children}
           </main>
           <Footer />

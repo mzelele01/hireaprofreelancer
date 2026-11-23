@@ -30,8 +30,8 @@ const playfair = Playfair_Display({
 export async function generateMetadata() {
   try {
     const settings = await getStoreSettings();
-    const title = settings.metaTitle || settings.storeName || "Watches in Kenya";
-    const description = settings.metaDescription || "Shop premium watches in Kenya. Authentic brands, fast delivery, and great prices on luxury and everyday timepieces.";
+    const title = settings.metaTitle || settings.storeName || "My Blog";
+    const description = settings.metaDescription || "Articles, guides and updates.";
     return {
       metadataBase: new URL(baseUrl),
       title: {
@@ -39,7 +39,6 @@ export async function generateMetadata() {
         template: `%s | ${title}`,
       },
       description,
-      keywords: ["watches", "Kenya", "luxury watches", "timepieces", "wristwatches", "Nairobi", "buy watches online"],
       icons: settings.faviconUrl ? { icon: settings.faviconUrl } : undefined,
       robots: {
         follow: true,
@@ -78,10 +77,10 @@ export async function generateMetadata() {
     return {
       metadataBase: new URL(baseUrl),
       title: {
-        default: "Watches in Kenya",
-        template: "%s | Watches in Kenya",
+        default: "My Blog",
+        template: "%s | My Blog",
       },
-      description: "Shop premium watches in Kenya. Authentic brands, fast delivery, and great prices on luxury and everyday timepieces.",
+      description: "Articles, guides and updates.",
       robots: {
         follow: true,
         index: true,
@@ -97,7 +96,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
-      <body className="bg-gray-100 text-black selection:bg-teal-300">
+      <body className="bg-white text-neutral-900 antialiased selection:bg-neutral-200">
         <Providers>
           {children}
           <Toaster closeButton />
