@@ -251,3 +251,7 @@ div[data-youtube-video] iframe {
   border: none;
   border-radius: 6px;
 }
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}

@@ -79,3 +79,33 @@ export function formatPostDate(date: Date | string, long = false) {
     day: "numeric",
   }).format(new Date(date));
 }
+
+// Same-category posts first, topped up with the latest posts if there aren't enough
+export async function getRelatedPosts(category: string | undefined, excludeSlug: string, limit = 3) {
+  const db = await connectDB();
+  const base: Record<string, unknown> = {
+    status: "published",
+    deletedAt: { $exists: false },
+    slug: { $ne: excludeSlug },
+  };
+  let posts: BlogPost[] = [];
+  if (category) {
+    posts = (await db
+      .collection("blogs")
+      .find({ ...base, category })
+      .sort({ publishedAt: -1, createdAt: -1 })
+      .limit(limit)
+      .toArray()) as BlogPost[];
+  }
+  if (posts.length < limit) {
+    const moreFilter: Record<string, unknown> = { ...base, _id: { $nin: posts.map((p) => p._id) as unknown[] } };
+    const more = (await db
+      .collection("blogs")
+      .find(moreFilter)
+      .sort({ publishedAt: -1, createdAt: -1 })
+      .limit(limit - posts.length)
+      .toArray()) as BlogPost[];
+    posts = [...posts, ...more];
+  }
+  return posts;
+}
